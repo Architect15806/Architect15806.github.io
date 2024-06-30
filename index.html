@@ -61,13 +61,13 @@
     
   <div class="cover-frame">
     <div class="bg-box">
-      <img src="/images/cover1.jpg" alt="image frame" />
+      <img src="/images/home.jfif" alt="image frame" />
     </div>
     <div class="cover-inner text-center text-white">
       <h1><a href="/">Hexo</a></h1>
       <div id="subtitle-box">
         
-          <span id="subtitle">吾罪甚\n我们内心的一切都会独自生根</span>
+        <span id="subtitle"></span>
         
       </div>
       <div>
@@ -82,9 +82,26 @@
 
 
 
+<script src="https://cdn.staticfile.org/typed.js/2.0.12/typed.min.js"></script>
+
 
 <!-- Subtitle -->
 
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['吾罪甚', '我们内心的一切都会独自生根', '留下寂寥孤独的脚印，像是落入水中，坠入汪洋，深不见底'],
+        startDelay: 50,
+        typeSpeed: 400,
+        loop: true,
+        backSpeed: 200,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
 <div id="main">
   <section class="outer">
   
