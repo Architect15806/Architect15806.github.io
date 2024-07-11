@@ -57,11 +57,6 @@
       
 <section class="cover">
     
-      
-      <a class="forkMe" href="https://github.com/Shen-Yu/hexo-theme-ayer"
-        target="_blank"><img width="149" height="149" src="/images/forkme.png"
-          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
-    
   <div class="cover-frame">
     <div class="bg-box">
       <img src="/images/home.jpg" alt="image frame" />
@@ -155,6 +150,128 @@
     
     
     
+    
+    <article
+  id="post-McNemar"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/07/11/McNemar/"
+    >McNemar</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/07/11/McNemar/" class="article-date">
+  <time datetime="2024-07-11T06:29:08.000Z" itemprop="datePublished">2024-07-11</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>对灵敏度（Sensitivity）和特异度（Specificity）进行独立比较时，我们仍然可以使用麦克尼马尔检验，但需要分别对每个度量进行检验。以下是具体步骤：</p>
+<h3 id="1-计算混淆矩阵"><a href="#1-计算混淆矩阵" class="headerlink" title="1. 计算混淆矩阵"></a>1. 计算混淆矩阵</h3><p>假设我们有两个模型A和B，它们的混淆矩阵如下：</p>
+<h4 id="模型A的混淆矩阵："><a href="#模型A的混淆矩阵：" class="headerlink" title="模型A的混淆矩阵："></a>模型A的混淆矩阵：</h4><ul>
+<li>True Positive (TP_A)</li>
+<li>True Negative (TN_A)</li>
+<li>False Positive (FP_A)</li>
+<li>False Negative (FN_A)</li>
+</ul>
+<h4 id="模型B的混淆矩阵："><a href="#模型B的混淆矩阵：" class="headerlink" title="模型B的混淆矩阵："></a>模型B的混淆矩阵：</h4><ul>
+<li>True Positive (TP_B)</li>
+<li>True Negative (TN_B)</li>
+<li>False Positive (FP_B)</li>
+<li>False Negative (FN_B)</li>
+</ul>
+<h3 id="2-计算灵敏度和特异度"><a href="#2-计算灵敏度和特异度" class="headerlink" title="2. 计算灵敏度和特异度"></a>2. 计算灵敏度和特异度</h3><p>灵敏度和特异度的定义为：</p>
+<ul>
+<li>灵敏度 (Sensitivity) &#x3D; TP &#x2F; (TP + FN)</li>
+<li>特异度 (Specificity) &#x3D; TN &#x2F; (TN + FP)</li>
+</ul>
+<h3 id="3-准备比较灵敏度的麦克尼马尔检验"><a href="#3-准备比较灵敏度的麦克尼马尔检验" class="headerlink" title="3. 准备比较灵敏度的麦克尼马尔检验"></a>3. 准备比较灵敏度的麦克尼马尔检验</h3><p>为了比较两个模型的灵敏度，我们需要考虑两个模型在预测正例上的表现。构建如下2x2表格：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>模型B预测正例正确</th>
+<th>模型B预测正例错误</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模型A预测正例正确</td>
+<td>( n_{01}^{\text{sens}} )</td>
+<td>( n_{00}^{\text{sens}} )</td>
+</tr>
+<tr>
+<td>模型A预测正例错误</td>
+<td>( n_{11}^{\text{sens}} )</td>
+<td>( n_{10}^{\text{sens}} )</td>
+</tr>
+</tbody></table>
+<ul>
+<li>( n_{01}^{\text{sens}} ): 模型A和模型B都正确预测正例的数量</li>
+<li>( n_{00}^{\text{sens}} ): 模型A正确，模型B错误预测正例的数量</li>
+<li>( n_{11}^{\text{sens}} ): 模型A错误，模型B正确预测正例的数量</li>
+<li>( n_{10}^{\text{sens}} ): 模型A和模型B都错误预测正例的数量</li>
+</ul>
+<h3 id="4-准备比较特异度的麦克尼马尔检验"><a href="#4-准备比较特异度的麦克尼马尔检验" class="headerlink" title="4. 准备比较特异度的麦克尼马尔检验"></a>4. 准备比较特异度的麦克尼马尔检验</h3><p>为了比较两个模型的特异度，我们需要考虑两个模型在预测负例上的表现。构建如下2x2表格：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>模型B预测负例正确</th>
+<th>模型B预测负例错误</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模型A预测负例正确</td>
+<td>( n_{01}^{\text{spec}} )</td>
+<td>( n_{00}^{\text{spec}} )</td>
+</tr>
+<tr>
+<td>模型A预测负例错误</td>
+<td>( n_{11}^{\text{spec}} )</td>
+<td>( n_{10}^{\text{spec}} )</td>
+</tr>
+</tbody></table>
+<ul>
+<li>( n_{01}^{\text{spec}} ): 模型A和模型B都正确预测负例的数量</li>
+<li>( n_{00}^{\text{spec}} ): 模型A正确，模型B错误预测负例的数量</li>
+<li>( n_{11}^{\text{spec}} ): 模型A错误，模型B正确预测负例的数量</li>
+<li>( n_{10}^{\text{spec}} ): 模型A和模型B都错误预测负例的数量</li>
+</ul>
+<h3 id="5-进行麦克尼马尔检验"><a href="#5-进行麦克尼马尔检验" class="headerlink" title="5. 进行麦克尼马尔检验"></a>5. 进行麦克尼马尔检验</h3><p>我们分别对灵敏度和特异度的2x2表格进行麦克尼马尔检验。以下是使用Python进行检验的示例代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> statsmodels.stats.contingency_tables <span class="keyword">import</span> mcnemar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 灵敏度的2x2表格</span></span><br><span class="line">sensitivity_table = np.array([[n01_sens, n00_sens],</span><br><span class="line">                              [n11_sens, n10_sens]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 特异度的2x2表格</span></span><br><span class="line">specificity_table = np.array([[n01_spec, n00_spec],</span><br><span class="line">                              [n11_spec, n10_spec]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进行麦克尼马尔检验</span></span><br><span class="line">sens_result = mcnemar(sensitivity_table, exact=<span class="literal">False</span>)</span><br><span class="line">spec_result = mcnemar(specificity_table, exact=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出结果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Sensitivity test statistic=%.3f, p-value=%.3f&#x27;</span> % (sens_result.statistic, sens_result.pvalue))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Specificity test statistic=%.3f, p-value=%.3f&#x27;</span> % (spec_result.statistic, spec_result.pvalue))</span><br></pre></td></tr></table></figure>
+
+<p>根据p值和设定的显著性水平，来判断是否在灵敏度和特异度上拒绝原假设，即两个模型在这两个指标上的性能是否有显著差异。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
     
     <article
   id="post-GPU-Servers"
@@ -369,7 +486,7 @@
     <ul>
       <li>
         Copyrights &copy;
-        2015-2024
+        2024
         <i class="ri-heart-fill heart_icon"></i> John Doe
       </li>
     </ul>
@@ -410,10 +527,6 @@
     <div class="float_btns">
       <div class="totop" id="totop">
   <i class="ri-arrow-up-line"></i>
-</div>
-
-<div class="todark" id="todark">
-  <i class="ri-moon-line"></i>
 </div>
 
     </div>
