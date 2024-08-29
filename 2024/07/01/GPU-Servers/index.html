@@ -77,13 +77,17 @@
     <div class="article-meta">
       <a href="/2024/07/01/GPU-Servers/" class="article-date">
   <time datetime="2024-06-30T16:10:52.000Z" itemprop="datePublished">2024-07-01</time>
-</a>   
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+  </div>
+  
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">507</span>
+            <span class="post-count">483</span>
         </span>
     </span>
 
@@ -107,9 +111,7 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>查看显卡：</p>
-<figure class="highlight shell"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
-
+  <p>查看显卡：<br><figure class="highlight shell"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure></p>
 <h2 id="服务器账户管理"><a href="#服务器账户管理" class="headerlink" title="服务器账户管理"></a>服务器账户管理</h2><h3 id="Server-1101"><a href="#Server-1101" class="headerlink" title="Server 1101"></a>Server 1101</h3><p>管理员账户：</p>
 <ul>
 <li>账户：xiang</li>
@@ -161,7 +163,7 @@
 <ul>
 <li>账户：amax</li>
 <li>密码：Amax1979!!!</li>
-<li>data 重新挂载：sudo mount &#x2F;dev&#x2F;sda1 &#x2F;data</li>
+<li>data 重新挂载：sudo mount /dev/sda1 /data</li>
 </ul>
 <p>黄梓航：</p>
 <ul>
@@ -229,23 +231,18 @@
 </ul>
 <p>群辉 Quick Connection（必须挂梯子，不能用香港）：</p>
 <ul>
-<li>账户：<a href="mailto:&#97;&#x72;&#99;&#104;&#105;&#116;&#x65;&#x63;&#116;&#x31;&#53;&#56;&#48;&#54;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#111;&#109;">&#97;&#x72;&#99;&#104;&#105;&#116;&#x65;&#x63;&#116;&#x31;&#53;&#56;&#48;&#54;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#111;&#109;</a></li>
+<li>账户：architect15806@gmail.com</li>
 <li>密码：Vx73755375</li>
 <li>远程访问：<a target="_blank" rel="noopener" href="https://mclab205-nas.cn3.quickconnect.cn/">https://mclab205-nas.cn3.quickconnect.cn/</a></li>
 </ul>
-<p>挂载 nas</p>
-<figure class="highlight shell"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nfs-kernel-server</span><br><span class="line">sudo apt install nfs-common</span><br><span class="line">sudo umount /mnt/nas/</span><br><span class="line">sudo mount -t nfs 192.168.3.100:/volume1/nas /mnt/nas_clear</span><br><span class="line">sudo mount -t nfs -o nfsvers=3,vers=3 192.168.3.99:/volume1/nas /mnt/nas_clear</span><br><span class="line">sudo mount -t nfs -o nfsvers=3,vers=3 192.168.3.103:/volume1/nas /mnt/nas_clear   (latest)</span><br><span class="line"></span><br><span class="line">sudo umount /mnt/nas_clear</span><br><span class="line">sudo mount -t nfs 192.168.3.103:/volume1/nas /mnt/nas_clear   (latest)</span><br></pre></td></tr></table></figure>
-
-
+<p>挂载 nas<br><figure class="highlight shell"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nfs-kernel-server</span><br><span class="line">sudo apt install nfs-common</span><br><span class="line">sudo umount /mnt/nas/</span><br><span class="line">sudo mount -t nfs 192.168.3.100:/volume1/nas /mnt/nas_clear</span><br><span class="line">sudo mount -t nfs -o nfsvers=3,vers=3 192.168.3.99:/volume1/nas /mnt/nas_clear</span><br><span class="line">sudo mount -t nfs -o nfsvers=3,vers=3 192.168.3.103:/volume1/nas /mnt/nas_clear   (latest)</span><br><span class="line"></span><br><span class="line">sudo umount /mnt/nas_clear</span><br><span class="line">sudo mount -t nfs 192.168.3.103:/volume1/nas /mnt/nas_clear   (latest)</span><br></pre></td></tr></table></figure></p>
 <h2 id="向日葵"><a href="#向日葵" class="headerlink" title="向日葵"></a>向日葵</h2><h3 id="医院服务器"><a href="#医院服务器" class="headerlink" title="医院服务器"></a>医院服务器</h3><ul>
-<li><p>伙伴识别码：663414761</p>
-</li>
+<li>伙伴识别码：663414761</li>
 <li><p>验证码：5klp04</p>
 </li>
 <li><p>伙伴识别码：996 062 262 </p>
 </li>
-<li><p>验证码：pv4i98</p>
-</li>
+<li>验证码：pv4i98</li>
 </ul>
 <h3 id="我的"><a href="#我的" class="headerlink" title="我的"></a>我的</h3><p>微信登录</p>
 <h2 id="校园网"><a href="#校园网" class="headerlink" title="校园网"></a>校园网</h2><h3 id="我的-1"><a href="#我的-1" class="headerlink" title="我的"></a>我的</h3><ul>
@@ -334,8 +331,6 @@
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MCLab/" rel="tag">MCLab</a></li></ul>
-
     </footer>
   </div>
 
