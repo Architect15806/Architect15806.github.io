@@ -480,7 +480,7 @@
 </ul>
 <h4 id="3-温度更新："><a href="#3-温度更新：" class="headerlink" title="3. 温度更新："></a>3. 温度更新：</h4><ul>
 <li>根据预定的温度下降函数（例如，线性下降或指数下降），降低温度 $T$。</li>
-<li>温度更新公式通常为 $T<em>{new} = \alpha \cdot T</em>{old}$，其中 $0 &lt; \alpha &lt; 1$ 是一个衰减系数。</li>
+<li>温度更新公式通常为 $T<em>{new} = \alpha \cdot T</em>{old}$ ，其中 $0 &lt; \alpha &lt; 1$ 是一个衰减系数。</li>
 </ul>
 <h4 id="4-停止条件："><a href="#4-停止条件：" class="headerlink" title="4. 停止条件："></a>4. 停止条件：</h4><ul>
 <li>如果满足预设的停止条件（如温度降至最低值或迭代次数达到上限），则停止迭代。</li>
@@ -491,16 +491,58 @@
 </ul>
 <h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义目标函数C</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">C</span>(<span class="params">s</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> / (s * np.sin(s) + <span class="number">12</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化</span></span><br><span class="line"><span class="comment"># 设定初始温度</span></span><br><span class="line"><span class="comment"># 函数原型：numpy.random.uniform(low,high,size)</span></span><br><span class="line"><span class="comment"># 从一个均匀分布[low,high)中随机采样，注意定义域是左闭右开，即包含low，不包含high.</span></span><br><span class="line">t0 = np.var(np.random.uniform(<span class="number">0</span>, <span class="number">12.55</span>, <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设定初始解</span></span><br><span class="line">s0 = np.random.uniform(<span class="number">0</span>, <span class="number">12.55</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设定迭代次数</span></span><br><span class="line">iters = <span class="number">3000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设定终止条件，连续ct个新解都没有接受（ct/cn大于某个值）时终止算法</span></span><br><span class="line">ct = <span class="number">200</span></span><br><span class="line">ct_array = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存历史最好的状态，默认取上边界值</span></span><br><span class="line">best = <span class="number">12.55</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, iters + <span class="number">1</span>):</span><br><span class="line">    <span class="comment"># 在s0附近，产生新解，但又能包含定义内的所有值</span></span><br><span class="line">    s1 = np.random.normal(s0, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">while</span> s1 &lt; <span class="number">0</span> <span class="keyword">or</span> s1 &gt; <span class="number">12.55</span>:</span><br><span class="line">        s1 = np.random.normal(s0, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="comment"># 计算能量增量</span></span><br><span class="line">    delta_t = C(s1) - C(s0)</span><br><span class="line">    <span class="keyword">if</span> delta_t &lt; <span class="number">0</span>:</span><br><span class="line">        s0 = s1</span><br><span class="line">        ct_array.append(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p = np.exp(-delta_t / t0)</span><br><span class="line">        <span class="keyword">if</span> np.random.uniform(<span class="number">0</span>, <span class="number">1</span>) &lt; p:</span><br><span class="line">            s0 = s1</span><br><span class="line">            ct_array.append(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ct_array.append(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    best = s0 <span class="keyword">if</span> C(s0) &lt; C(best) <span class="keyword">else</span> best</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 更新温度</span></span><br><span class="line">    t0 = t0 / np.log(<span class="number">1</span> + t)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查终止条件</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(ct_array) &gt; ct <span class="keyword">and</span> np.<span class="built_in">sum</span>(ct_array[-ct:]) == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;迭代 &quot;</span>, t, <span class="string">&quot; 次，连续 &quot;</span>, ct, <span class="string">&quot; 次没有接受新解，算法终止！&quot;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 状态最终停留位置</span></span><br><span class="line"><span class="built_in">print</span>(s0)</span><br><span class="line"><span class="comment"># array([7.98092592])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最佳状态，即对应最优解的状态</span></span><br><span class="line"><span class="built_in">print</span>(best)</span><br><span class="line"><span class="comment"># 迭代  363  次，连续  200  次没有接受新解，算法终止！</span></span><br><span class="line"><span class="comment"># array([7.98092592])</span></span><br></pre></td></tr></table></figure>
 <h2 id="五、遗传算法"><a href="#五、遗传算法" class="headerlink" title="五、遗传算法"></a>五、遗传算法</h2><p><a target="_blank" rel="noopener" href="https://github.com/dothinking/dothinking.github.io/blob/master/docs/2018-10-21-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8APython%E5%AE%9E%E7%8E%B0.md">https://github.com/dothinking/dothinking.github.io/blob/master/docs/2018-10-21-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8APython%E5%AE%9E%E7%8E%B0.md</a></p>
-<h1 id="数学建模-数据预处理"><a href="#数学建模-数据预处理" class="headerlink" title="数学建模 - 数据预处理"></a>数学建模 - 数据预处理</h1><p>数据预处理：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46126118/article/details/113623911">https://blog.csdn.net/qq_46126118/article/details/113623911</a></p>
-<p>一、数据清理（缺失值、异常值、无关值、噪音、重复值）<br>1.缺失值<br>缺失值：1、删除：数量较少，对整体数据没什么影响的直接删除该条数据。2、对缺失数据插补：方法较多，例如用该属性的均值、众数、中位数插补，这些较为简单，不详述；最近邻插补，使用与缺失样本最接近的样本的该属性值插补；回归法（建模预测）：就是根据样本集的其他属性来建立一个拟合模型预测缺失属性的值，根据模型来计算缺失值。常用的缺失值处理方法就这些，还有许多其他的方法，如拉格朗日插值等等。</p>
-<p>2.异常值<br>异常值：首先要知道如何找出某个属性的异常值。我一般用的方法是画箱型图，<br>下四分位数（Q1）=（数据个数+1）0.25<br>上四分位数（Q3）=（数据个数+1）0.75<br>盒子长度IQR = Q3-Q1<br>最小观测值（下边缘）=Q1 - 1.5IQR<br>最大观测值（上边缘）=Q3+ 1.5IQR<br>不在最小最大观测值范围内的视为异常值<br>处理异常值：1、直接删除，2、当作缺失值、用缺失值的处理方法；3、暂时保留。</p>
-<p>3.无关值<br>无关值：像id这种无关的属性直接删掉即可，样本集中可能还有其它的无关属性，需要根据业务情况具体分析才行。</p>
-<p>4.噪音<br>噪音：1、分箱：通过考察相邻数据来确定最终值。实际上就是按照属性值划分的子区间，如果一个属性值处于某个子区间范围内，就称把该属性值放进这个子区间所代表的“箱子”内。把待处理的数据（某列属性值）按照一定的规则放进一些箱子中，考察每一个箱子中的数据，采用某种方法分别对各个箱子中的数据进行处理。分箱的方法一般有等深分箱法、等宽分箱法、最小熵法和用户自定义区间法。数据平滑方法：按平均值平滑、按边界值平滑和按中值平滑。按平均值平滑：对同一箱值中的数据求平均值，用平均值替代该箱子中的所有数据。按边界值平滑：用距离较小的边界值替代箱中每一数据。按中值平滑：取箱子的中值，用来替代箱子中的所有数据。<br>2、聚类：将物理的或抽象对象的集合分组为由类似的对象组成的多个类。找出并清除那些落在簇之外的值（孤立点），这些孤立点被视为噪声。<br>3、回归；试图发现两个相关的变量之间的变化模式，通过使数据适合一个函数来平滑数据，即通过建立数学模型来预测下一个数值，包括线性回归和非线性回归。</p>
-<p>5.重复值<br>重复值：对于重复项的判断，基本思想是“排序与合并”，先将数据集中的记录按一定规则排序，然后通过比较邻近记录是否相似来检测记录是否重复。这里面其实包含了两个操作，一是排序，二是计算相似度。一般过程中主要是用duplicated方法进行判断，然后将重复的样本进行简单的删除处理。</p>
-<p>二、数据集成<br>数据集成就是为了将不同数据源的数据整合导一个数据库中，需要注意的是集成过程中可能产生的问题：</p>
-<p>属性（字段名）意义问题：即同一字段名所代表的含义不一样，例如’日期‘，可能一个数据源中表示生产日期，一个数据源表示’保质日期‘；<br>字段结构问题：即不同的字段名表示的是一样的数据；字段的数据类型不同；字段数据格式不同；字段单位不同等；<br>字段冗余问题：集成后的字段之间具有较强的相关性，可以相互推导出。（ps：相关性的计算可以用卡方检验或者协方差，皮尔逊相关系数等）</p>
+<h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h3><ul>
+<li>种群 Population：生物的进化以群体的形式进行，这样的一个群体称为种群。</li>
+<li>个体：组成种群的单个生物。</li>
+<li>基因 Gene：一个遗传因子。</li>
+<li>染色体 Chromosome：包含一组的基因。</li>
+<li>生存竞争，适者生存：对环境适应度高的、牛B的个体参与繁殖的机会比较多，后代就会越来越多。适应度低的个体参与繁殖的机会比较少，后代就会越来越少。</li>
+<li>遗传与变异：新个体会遗传父母双方各一部分的基因，同时有一定的概率发生基因变异。</li>
+</ul>
+<p>简单说来就是：繁殖过程，会发生基因交叉( Crossover ) ，基因突变 ( Mutation ) ，适应度( Fitness )低的个体会被逐步淘汰，而适应度高的个体会越来越多。那么经过N代的自然选择后，保存下来的个体都是适应度很高的，其中很可能包含史上产生的适应度最高的那个个体。</p>
+<h3 id="2-思想"><a href="#2-思想" class="headerlink" title="2. 思想"></a>2. 思想</h3><p>GA的组成:</p>
+<ul>
+<li>编码（产生初始种群）</li>
+<li>适应度函数</li>
+<li>遗传算子（选择、交叉、变异）</li>
+<li>运行参数</li>
+</ul>
+<p>借鉴生物进化论，遗传算法将要解决的问题模拟成一个生物进化的过程，通过复制、交叉、突变等操作产生下一代的解，并逐步淘汰掉适应度函数值低的解，增加适应度函数值高的解。这样进化N代后就很有可能会进化出适应度函数值很高的个体。</p>
+<p><strong>举例</strong>：<br>使用遗传算法解决“0-1背包问题”的思路：0-1背包的解可以编码为一串0-1字符串（0：不取，1：取） ；首先，随机产生M个0-1字符串，然后评价这些0-1字符串作为0-1背包问题的解的优劣；然后，随机选择一些字符串通过交叉、突变等操作产生下一代的M个字符串，而且较优的解被选中的概率要比较高。这样经过G代的进化后就可能会产生出0-1背包问题的一个“近似最优解”。</p>
+<h3 id="3-算法"><a href="#3-算法" class="headerlink" title="3. 算法"></a>3. 算法</h3><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000004155021#item-2">https://segmentfault.com/a/1190000004155021#item-2</a></p>
+<h1 id="数学建模-数据预处理"><a href="#数学建模-数据预处理" class="headerlink" title="数学建模 - 数据预处理"></a>数学建模 - 数据预处理</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46126118/article/details/113623911">https://blog.csdn.net/qq_46126118/article/details/113623911</a></p>
+<h2 id="一、数据清理（缺失值、异常值、无关值、噪音、重复值）"><a href="#一、数据清理（缺失值、异常值、无关值、噪音、重复值）" class="headerlink" title="一、数据清理（缺失值、异常值、无关值、噪音、重复值）"></a>一、数据清理（缺失值、异常值、无关值、噪音、重复值）</h2><h3 id="1-缺失值"><a href="#1-缺失值" class="headerlink" title="1. 缺失值"></a>1. 缺失值</h3><p>缺失值：</p>
+<ul>
+<li>删除：数量较少，对整体数据没什么影响的直接删除该条数据。</li>
+<li>对缺失数据插补：方法较多，例如用该属性的均值、众数、中位数插补，这些较为简单，不详述；</li>
+<li>最近邻插补:使用与缺失样本最接近的样本的该属性值插补；</li>
+<li>回归法（建模预测）：就是根据样本集的其他属性来建立一个拟合模型预测缺失属性的值，根据模型来计算缺失值。</li>
+</ul>
+<p>常用的缺失值处理方法就这些，还有许多其他的方法，如拉格朗日插值等等。</p>
+<h3 id="2-异常值"><a href="#2-异常值" class="headerlink" title="2. 异常值"></a>2. 异常值</h3><p>异常值：首先要知道如何找出某个属性的异常值。我一般用的方法是画箱型图：</p>
+<ul>
+<li>下四分位数（Q1）=（数据个数+1）0.25</li>
+<li>上四分位数（Q3）=（数据个数+1）0.75</li>
+<li>盒子长度IQR = Q3-Q1</li>
+<li>最小观测值（下边缘）=Q1 - 1.5IQR</li>
+<li>最大观测值（上边缘）=Q3+ 1.5IQR</li>
+</ul>
+<p>不在最小最大观测值范围内的视为异常值<br>处理异常值：1、直接删除，2、当作缺失值、用缺失值的处理方法；3、暂时保留。</p>
+<h3 id="3-无关值"><a href="#3-无关值" class="headerlink" title="3. 无关值"></a>3. 无关值</h3><p>像 id 这种无关的属性直接删掉即可，样本集中可能还有其它的无关属性，需要根据业务情况具体分析才行。</p>
+<h3 id="4-噪音"><a href="#4-噪音" class="headerlink" title="4. 噪音"></a>4. 噪音</h3><ul>
+<li>分箱：通过考察相邻数据来确定最终值。实际上就是按照属性值划分的子区间，如果一个属性值处于某个子区间范围内，就称把该属性值放进这个子区间所代表的“箱子”内。把待处理的数据（某列属性值）按照一定的规则放进一些箱子中，考察每一个箱子中的数据，采用某种方法分别对各个箱子中的数据进行处理。分箱的方法一般有等深分箱法、等宽分箱法、最小熵法和用户自定义区间法。数据平滑方法：按平均值平滑、按边界值平滑和按中值平滑。按平均值平滑：对同一箱值中的数据求平均值，用平均值替代该箱子中的所有数据。按边界值平滑：用距离较小的边界值替代箱中每一数据。按中值平滑：取箱子的中值，用来替代箱子中的所有数据。</li>
+<li>聚类：将物理的或抽象对象的集合分组为由类似的对象组成的多个类。找出并清除那些落在簇之外的值（孤立点），这些孤立点被视为噪声。</li>
+<li>回归；试图发现两个相关的变量之间的变化模式，通过使数据适合一个函数来平滑数据，即通过建立数学模型来预测下一个数值，包括线性回归和非线性回归。</li>
+</ul>
+<h3 id="5-重复值"><a href="#5-重复值" class="headerlink" title="5. 重复值"></a>5. 重复值</h3><p>重复值：对于重复项的判断，基本思想是“排序与合并”，先将数据集中的记录按一定规则排序，然后通过比较邻近记录是否相似来检测记录是否重复。这里面其实包含了两个操作，一是排序，二是计算相似度。一般过程中主要是用duplicated方法进行判断，然后将重复的样本进行简单的删除处理。</p>
+<h2 id="二、数据集成"><a href="#二、数据集成" class="headerlink" title="二、数据集成"></a>二、数据集成</h2><p>数据集成就是为了将不同数据源的数据整合导一个数据库中，需要注意的是集成过程中可能产生的问题：</p>
+<ul>
+<li>属性（字段名）意义问题：即同一字段名所代表的含义不一样，例如’日期‘，可能一个数据源中表示生产日期，一个数据源表示’保质日期‘；</li>
+<li>字段结构问题：即不同的字段名表示的是一样的数据；字段的数据类型不同；字段数据格式不同；字段单位不同等；</li>
+<li>字段冗余问题：集成后的字段之间具有较强的相关性，可以相互推导出。（ps：相关性的计算可以用卡方检验或者协方差，皮尔逊相关系数等）</li>
+</ul>
 <p>一般在集成前，可以先做个表将个数据源的字段名，类型等统计一下，再做处理。</p>
-<p>三、数据变换和数据规约<br>个人觉得数据变换和数据规约其实等同于特征工程所要做的事，这里简单介绍下。<br>数据变换就是对数据做归一化，标准化等处理，例如不同的属性的值的量纲或者取值范围相差过大。<br>数据规约则是对减少过多的属性（维度、特征）对预测的模型的影响，常用方法：合并属性，主成成分分析（PCA），逐步向前（向后删除）、低方差特征过滤、one-hot编码等。</p>
+<h2 id="三、数据变换和数据规约"><a href="#三、数据变换和数据规约" class="headerlink" title="三、数据变换和数据规约"></a>三、数据变换和数据规约</h2><p>个人觉得数据变换和数据规约其实等同于特征工程所要做的事，这里简单介绍下。<br>数据变换就是对数据做归一化，标准化等处理，例如不同的属性的值的量纲或者取值范围相差过大。<br>数据规约则是对减少过多的属性（维度、特征）对预测的模型的影响，常用方法：合并属性，主成成分分析（PCA），逐步向前（向后删除）、低方差特征过滤、one-hot编码等。</p>
  
       <!-- reward -->
       
